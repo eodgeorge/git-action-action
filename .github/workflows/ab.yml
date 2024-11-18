@@ -1,67 +1,45 @@
-name: make commit
 
+name: run deployment java+k8s
 on:
-  # This workflow is triggered manually from the Actions tab
-  workflow_dispatch:
-
+  push:
+    branches:
+    - main/exm/
+env:
+  kubeconfig: ${{ secrets.kubeconfig }}
+  sonar_token: ${{ secrets.sonar_token }}
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        python-version: ['3.8']
+    name: java+k8s&apps
+    runs-on: ubuntu-latest
+
     steps:
-      - name: checkout2workspace
-        uses: actions/checkout@v3    
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: workspace checkout
+      - uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.5.0
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-      - name: run tests
-        run: |
-          cd src
-          python -m pytest addition.py
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          java-version: '17'
+      - name: maven build
+        run: mvn clean install
+      - name: perform sonarqube analysis
+        uses: SonarSource/sonarcloud-github-action@v3.1.0
+        with:
+          sonarcloud.organization: <eodgeorge>
+          sonarcloud.projectKey: <eodgeorge_git-action-action>
+          sonarcloud.projectName: <eodgeorge>
+          sonarcloud.token: ${{ env.sonar_token }}
+          sonarcloud.scannerVersion: "4.2.0.1873"
+          
+          
 
 
 # name: make commit
+
 # on:
-# # This workflow is triggered manually from the Actions tab
+#   # This workflow is triggered manually from the Actions tab
 #   workflow_dispatch:
+
 # jobs:
 #   build:
 #     runs-on: ubuntu-22.04
@@ -82,8 +60,18 @@ jobs:
 #       - name: run tests
 #         run: |
 #           cd src
-#           python -m pytest src/addition.py
-          
+#           python -m pytest addition.py
+
+
+
+
+
+
+
+
+
+
+
 
 
 
