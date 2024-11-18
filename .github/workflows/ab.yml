@@ -4,6 +4,7 @@ name: make commit
 #     branches:
 #     - .github/workflows/main.yml
 on:
+# This workflow is triggered manually from the Actions tab
   workflow_dispatch:
 jobs:
   build:
