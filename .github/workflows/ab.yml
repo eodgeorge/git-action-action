@@ -1,7 +1,9 @@
 name: make commit
+
 on:
-# This workflow is triggered manually from the Actions tab
+  # This workflow is triggered manually from the Actions tab
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -23,6 +25,64 @@ jobs:
         run: |
           cd src
           python -m pytest src/addition.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# name: make commit
+# on:
+# # This workflow is triggered manually from the Actions tab
+#   workflow_dispatch:
+# jobs:
+#   build:
+#     runs-on: ubuntu-22.04
+#     strategy:
+#       matrix:
+#         python-version: ['3.8']
+#     steps:
+#       - name: checkout2workspace
+#         uses: actions/checkout@v3    
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ matrix.python-version }}
+#       - name: install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install pytest
+#       - name: run tests
+#         run: |
+#           cd src
+#           python -m pytest src/addition.py
           
 
 
