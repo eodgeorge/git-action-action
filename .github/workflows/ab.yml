@@ -30,8 +30,23 @@ jobs:
           sonarcloud.projectName: <eodgeorge>
           sonarcloud.token: ${{ env.sonar_token }}
           sonarcloud.scannerVersion: "4.2.0.1873"
-          
-          
+  
+  deploy:
+     needs: [build]
+     runs-on: ubuntu-latest
+
+     steps:
+       - name: workspace checkout
+       - uses: actions/checkout@v4
+
+       - name: deploy k8s-code
+         uses: phamquyhai/kubernetes-action@v1.1.2
+         with:
+           args: apply -f kubernetes/
+         env:
+           kubeconfig: ${{ secrets.kubeconfig }}
+           
+      
 
 
 # name: make commit
