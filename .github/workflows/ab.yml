@@ -1,8 +1,5 @@
 name: make commit
-# on:
-#   push:
-#     branches:
-#     - .github/workflows/main.yml
+
 on:
 # This workflow is triggered manually from the Actions tab
   workflow_dispatch:
@@ -27,6 +24,11 @@ jobs:
         run: |
           cd src
           python -m pytest src/addition.py
+
+      # on:
+#   push:
+#     branches:
+#     - .github/workflows/main.yml
           
 
 
