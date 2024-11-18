@@ -1,1 +1,27 @@
-
+name: make commit
+# on:
+#   push:
+#     branches:
+#     - .github/workflows/main.yml
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: ['3.8']
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: ${{ matrix.python-version}}
+      - name: install dependencies
+        run: |
+          pyhton -m pip install --upgrade pip
+          pip install pytest
+      - name: run tests
+        run: |
+          cd src
+          python -m pytest addition.py
+          
